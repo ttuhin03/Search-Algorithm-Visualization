@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.event.*;
 
 public class gui_test implements ActionListener {
-    JButton button, button2;
+    JButton button;
     private Felder[][] feld = new Felder[30][20];
     public static boolean globalIsEndpointSet, globalIsStartpointSet;
     public static int endPointXPos, endPointYPos, startPointXPos, startPointYPos;
