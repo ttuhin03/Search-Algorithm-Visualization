@@ -17,6 +17,7 @@ public class Felder {
     private final ImageIcon grau = new ImageIcon("C:\\Users\\Tuhin Thodeme\\Search Algo V 0\\src\\com\\company\\bilder\\grau.jpg");
     private final ImageIcon start = new ImageIcon("");
     private final ImageIcon end = new ImageIcon("");
+    //TODO: icon für benutze felder, und methode zum ändern des feldes zu benutzt
     private ImageIcon original = new ImageIcon();
 
 
