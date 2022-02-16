@@ -15,9 +15,9 @@ public class Felder {
     private final ImageIcon blau = new ImageIcon("C:\\Users\\Tuhin Thodeme\\Search Algo V 0\\src\\com\\company\\bilder\\blau.jpg");
     private final ImageIcon weiss = new ImageIcon("C:\\Users\\Tuhin Thodeme\\Search Algo V 0\\src\\com\\company\\bilder\\weiß.jpg");
     private final ImageIcon grau = new ImageIcon("C:\\Users\\Tuhin Thodeme\\Search Algo V 0\\src\\com\\company\\bilder\\grau.jpg");
-    private final ImageIcon start = new ImageIcon("");
-    private final ImageIcon end = new ImageIcon("");
-    //TODO: icon für benutze felder, und methode zum ändern des feldes zu benutzt
+    private final ImageIcon start = new ImageIcon("C:\\Users\\Tuhin Thodeme\\Search Algo V 0\\src\\com\\company\\bilder\\green.jpg");
+    private final ImageIcon end = new ImageIcon("C:\\Users\\Tuhin Thodeme\\Search Algo V 0\\src\\com\\company\\bilder\\red.jpg");
+    private final ImageIcon used = new ImageIcon("C:\\Users\\Tuhin Thodeme\\Search Algo V 0\\src\\com\\company\\bilder\\yellow.jpg");
     private ImageIcon original = new ImageIcon();
 
 
@@ -62,6 +62,10 @@ public class Felder {
 
         panel.add(label);
         return panel;
+    }
+
+    public void changeToUsed(){
+        label.setIcon(used);
     }
 
     public boolean isStartPoint(){
