@@ -53,6 +53,8 @@ public class Felder {
                     setStartPoint();
                 }else if(gui_test.setEndpointButton){
                     setEndPoint();
+                }else if(gui_test.setDeleteButton){
+                    changeToOiginal();
                 }else{
                     System.out.println("Keine Auswahl getroffen");
                 }
@@ -90,7 +92,7 @@ public class Felder {
         isWall = false;
         startPoint = false;
         endPoint = false;
-        //ruft nach einem manuellen zurückseen die globale variablen updater auf
+        //TODO: ruft nach einem manuellen zurückseen die globale variablen updater auf
     }
 
     public void setEndPoint(){
@@ -100,7 +102,7 @@ public class Felder {
             gui_test.endPointXPos = x;
             gui_test.startPointYPos = y;
             gui_test.globalIsEndpointSet = true;
-            System.out.println("Set Endpoint");
+            //System.out.println("Set Endpoint");
             if(startPoint) {
                 startPoint = false;
                 gui_test.globalIsStartpointSet = false;
@@ -120,7 +122,7 @@ public class Felder {
                 gui_test.startPointXPos = x;
                 gui_test.startPointYPos = y;
                 gui_test.globalIsStartpointSet = true;
-                System.out.println("Set Startpoint");
+                //System.out.println("Set Startpoint");
             if(endPoint) {
                 endPoint = false;
                 gui_test.globalIsEndpointSet = false;
