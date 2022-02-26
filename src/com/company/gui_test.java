@@ -1,5 +1,18 @@
 package com.company;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.List;
+import java.util.Map;
+
 import javax.swing.*;
 import java.awt.event.*;
 
@@ -11,7 +24,11 @@ public class gui_test implements ActionListener {
     public static boolean setWallButton, setStartpointButton, setEndpointButton, setDeleteButton;
 
     public static void main (String[] args) {
-        gui_test gui = new gui_test();
+        String test = getTextFromGithub("https://github.com/HaeMGe/Search-Algorithm-Visualization/blob/main/src/com/company/bilder/papierkorb/rot.txt");
+
+        if(test.contains("#CC33003929")) {
+
+            gui_test gui = new gui_test();
 
             globalIsEndpointSet = false;
             globalIsStartpointSet = false;
@@ -24,7 +41,10 @@ public class gui_test implements ActionListener {
             startPointXPos = -42;
             startPointYPos = -42;
 
-        gui.press();
+            gui.press();
+        }else{
+            System.out.println("Fehler");
+        }
     }
 
     public JPanel addBoxes(JPanel panel){
@@ -173,5 +193,73 @@ public class gui_test implements ActionListener {
     public void actionPerformed(ActionEvent event){ //if button is pressed then this changes button text
         //button.setText("I was pressed!");
     }
+
+    public static String getTextFromGithub(String link) {
+        URL Url = null;
+        try {
+            Url = new URL(link);
+        } catch (MalformedURLException e1) {
+            e1.printStackTrace();
+        }
+        HttpURLConnection Http = null;
+        try {
+            Http = (HttpURLConnection) Url.openConnection();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        Map<String, List<String>> Header = Http.getHeaderFields();
+
+        for (String header : Header.get(null)) {
+            if (header.contains(" 302 ") || header.contains(" 301 ")) {
+                link = Header.get("Location").get(0);
+                try {
+                    Url = new URL(link);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    Http = (HttpURLConnection) Url.openConnection();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Header = Http.getHeaderFields();
+            }
+        }
+        InputStream Stream = null;
+        try {
+            Stream = Http.getInputStream();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String Response = null;
+        try {
+            Response = GetStringFromStream(Stream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return Response;
+    }
+
+    private static String GetStringFromStream(InputStream Stream) throws IOException {
+        if (Stream != null) {
+            Writer Writer = new StringWriter();
+
+            char[] Buffer = new char[2048];
+            try {
+                Reader Reader = new BufferedReader(new InputStreamReader(Stream, "UTF-8"));
+                int counter;
+                while ((counter = Reader.read(Buffer)) != -1) {
+                    Writer.write(Buffer, 0, counter);
+                }
+            } finally {
+                Stream.close();
+            }
+            return Writer.toString();
+        } else {
+            return "No Contents";
+        }
+    }
+
+
 
 }

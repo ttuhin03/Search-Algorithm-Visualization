@@ -13,12 +13,13 @@ public class Felder {
     private boolean startPoint;
     private boolean endPoint;
     private JLabel label = new JLabel();
-    private final ImageIcon blau = new ImageIcon("C:\\Users\\Tuhin Thodeme\\Search Algo V 0\\src\\com\\company\\bilder\\blau.jpg");
-    private final ImageIcon weiss = new ImageIcon("C:\\Users\\Tuhin Thodeme\\Search Algo V 0\\src\\com\\company\\bilder\\weiß.jpg");
-    private final ImageIcon grau = new ImageIcon("C:\\Users\\Tuhin Thodeme\\Search Algo V 0\\src\\com\\company\\bilder\\grau.jpg");
-    private final ImageIcon start = new ImageIcon("C:\\Users\\Tuhin Thodeme\\Search Algo V 0\\src\\com\\company\\bilder\\green.jpg");
-    private final ImageIcon end = new ImageIcon("C:\\Users\\Tuhin Thodeme\\Search Algo V 0\\src\\com\\company\\bilder\\red.jpg");
-    private final ImageIcon used = new ImageIcon("C:\\Users\\Tuhin Thodeme\\Search Algo V 0\\src\\com\\company\\bilder\\yellow.jpg");
+    //TODO: Change Paths from Absoolute Path to relative paths
+    private final ImageIcon blau = new ImageIcon("C:\\Users\\Tuhin Thodeme\\Documents\\GitHub\\Search-Algorithm-Visualization\\src\\com\\company\\bilder\\blau.jpg");
+    private final ImageIcon weiss = new ImageIcon("C:\\Users\\Tuhin Thodeme\\Documents\\GitHub\\Search-Algorithm-Visualization\\src\\com\\company\\bilder\\weiß.jpg");
+    private final ImageIcon grau = new ImageIcon("C:\\Users\\Tuhin Thodeme\\Documents\\GitHub\\Search-Algorithm-Visualization\\src\\com\\company\\bilder\\grau.jpg");
+    private final ImageIcon start = new ImageIcon("C:\\Users\\Tuhin Thodeme\\Documents\\GitHub\\Search-Algorithm-Visualization\\src\\com\\company\\bilder\\green.jpg");
+    private final ImageIcon end = new ImageIcon("C:\\Users\\Tuhin Thodeme\\Documents\\GitHub\\Search-Algorithm-Visualization\\src\\com\\company\\bilder\\red.jpg");
+    private final ImageIcon used = new ImageIcon("C:\\Users\\Tuhin Thodeme\\Documents\\GitHub\\Search-Algorithm-Visualization\\src\\com\\company\\bilder\\yellow.jpg");
     private ImageIcon original = new ImageIcon();
 
 
