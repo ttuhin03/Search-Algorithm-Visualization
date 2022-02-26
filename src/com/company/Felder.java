@@ -116,6 +116,7 @@ public class Felder {
     }
 
     public void setStartPoint(){
+        //t
         if(!gui_test.globalIsStartpointSet) {
                 label.setIcon(start);
                 startPoint = true;
