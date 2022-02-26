@@ -1,5 +1,6 @@
 package com.company;
 
+import com.company.gui_test;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;

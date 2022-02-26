@@ -1,8 +1,6 @@
 package com.company;
 
 import javax.swing.*;
-import java.awt.*;
-import javax.swing.*;
 import java.awt.event.*;
 
 public class gui_test implements ActionListener {
