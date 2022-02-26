@@ -24,6 +24,7 @@ public class Felder {
 
 
     public Felder(){
+        //default Werte
         isWall = false;
         startPoint = false;
         endPoint = false;
@@ -32,6 +33,8 @@ public class Felder {
     }
 
     public JPanel addFeld(@NotNull JPanel panel, int xPos, int yPos, String farbe){
+        //Es wird ein label erstellt, welches an der Position x,y am panel ist
+        //und die aktion für den Fall der Auswahl wird gesetzt.
         x = xPos;
         y = yPos;
 
@@ -45,8 +48,10 @@ public class Felder {
             throw new java.lang.Error("Fehler beim setzen der Felder/Farben");
         }
 
+        //Position und Groesse des Labels wird gesetzt
         label.setBounds(xPos, yPos, 30, 30);
 
+        //Die Aktion für den Fall der Auswahl wird gesetzt.
         label.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent me) {
                 if(gui_test.setWallButton){
@@ -64,32 +69,40 @@ public class Felder {
             }
         });
 
+        //Label wird dem panel hinzugefügt
         panel.add(label);
         return panel;
     }
 
+    //Falls beim Algorihmus durchlauf das Feld benutzt wurde,
+    //wird in der UI die Farbe verändert zur Visualisierung
     public void changeToUsed(){
         label.setIcon(used);
     }
 
+    //Gibt zurück, ob das jeweilige Feld ein Startpunkt ist
     public boolean isStartPoint(){
         return startPoint;
     }
 
+    //Gibt zurück, ob das jeweiliige Feld ein Endpunkt ist
     public boolean isEndPoint() {
         return endPoint;
     }
 
+    //Gibt zurück, ob das jeweilige Feld eine Wand ist
     public boolean isWall() {
         return isWall;
     }
 
+    //Setzt am Ende des Algorithmus den gefundenen schnellesten Weg in die Farbe zur Visualisierung
     public void changeToPath(){
-        //get color for path
+        //TODO:get color for path
         //label.setIcon();
     }
 
     public void changeToOiginal(){
+        //Verändert die Farbe vom Feld zu seinem Original, zB bei einem Reset oder Löschung des Feldes
         label.setIcon(original);
         isWall = false;
         startPoint = false;
@@ -98,13 +111,14 @@ public class Felder {
     }
 
     public void setEndPoint(){
+        //Setzt Endpunkt, falls noch kein anderer vorhanden ist
         if(!gui_test.globalIsEndpointSet) {
             label.setIcon(end);
             endPoint = true;
+            //Updatet die Globale variablen
             gui_test.endPointXPos = x;
             gui_test.startPointYPos = y;
             gui_test.globalIsEndpointSet = true;
-            //System.out.println("Set Endpoint");
             if(startPoint) {
                 startPoint = false;
                 gui_test.globalIsStartpointSet = false;
@@ -118,14 +132,14 @@ public class Felder {
     }
 
     public void setStartPoint(){
-        //t
+        //Setzt Startpunkt, falls noch kein anderer vorhanden ist
         if(!gui_test.globalIsStartpointSet) {
                 label.setIcon(start);
                 startPoint = true;
+                //Updatet die Globale variablen
                 gui_test.startPointXPos = x;
                 gui_test.startPointYPos = y;
                 gui_test.globalIsStartpointSet = true;
-                //System.out.println("Set Startpoint");
             if(endPoint) {
                 endPoint = false;
                 gui_test.globalIsEndpointSet = false;
@@ -139,6 +153,7 @@ public class Felder {
     }
 
     public void changeToWall(){
+        //Verändert Farbe zu Wand
         label.setIcon(blau);
         isWall = true;
         System.out.println("Set Wall");
