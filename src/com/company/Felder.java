@@ -32,7 +32,7 @@ public class Felder {
         y = -42;
     }
 
-    public JPanel addFeld(@NotNull JPanel panel, int xPos, int yPos, String farbe){
+    public JPanel addFeld(@NotNull JPanel panel, int xPosLabel, int yPosLabel, String farbe, int xPos,int yPos){
         //Es wird ein label erstellt, welches an der Position x,y am panel ist
         //und die aktion für den Fall der Auswahl wird gesetzt.
         x = xPos;
@@ -49,7 +49,7 @@ public class Felder {
         }
 
         //Position und Groesse des Labels wird gesetzt
-        label.setBounds(xPos, yPos, 30, 30);
+        label.setBounds(xPosLabel, yPosLabel, 30, 30);
 
         //Die Aktion für den Fall der Auswahl wird gesetzt.
         label.addMouseListener(new MouseAdapter() {
@@ -78,6 +78,7 @@ public class Felder {
     //wird in der UI die Farbe verändert zur Visualisierung
     public void changeToUsed(){
         label.setIcon(used);
+        System.out.println("useeeeeed");
     }
 
     //Gibt zurück, ob das jeweilige Feld ein Startpunkt ist
@@ -117,7 +118,7 @@ public class Felder {
             endPoint = true;
             //Updatet die Globale variablen
             gui_test.endPointXPos = x;
-            gui_test.startPointYPos = y;
+            gui_test.endPointYPos = y;
             gui_test.globalIsEndpointSet = true;
             if(startPoint) {
                 startPoint = false;

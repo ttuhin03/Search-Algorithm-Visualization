@@ -10,14 +10,17 @@ import java.io.Writer;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.concurrent.TimeUnit;
 
 public class gui_test implements ActionListener {
-    private static int[][] arrayFeld, copyArrayFeld;
+    public JFrame frame;
+    public JPanel panel;
+    private static int[][] arrayFeld, markUsed;
+    private static int [][][]saveLast;
     JButton startButton,endButton,wallButton,deleteButton, runButton,resetButton;
     private Felder[][] feld = new Felder[30][20];
     public static boolean globalIsEndpointSet, globalIsStartpointSet;
@@ -104,7 +107,14 @@ public class gui_test implements ActionListener {
                 setWallButton = false;
                 setDeleteButton = false;
 
-                //TODO: Reset all felder + update globaler variablen
+                resetAllFelder();
+
+                endPointXPos = -42;
+                endPointYPos = -42;
+                startPointXPos = -42;
+                startPointYPos = -42;
+                globalIsEndpointSet = false;
+                globalIsStartpointSet = false;
 
             } } );
 
@@ -147,6 +157,7 @@ public class gui_test implements ActionListener {
         wallButton.setBounds(320,20,130,40);
         deleteButton.setBounds(470,20,130,40);
         runButton.setBounds(620,20,130,40);
+        resetButton.setBounds(770,20,130,40);
 
         //Hinzufügen der Buttons auf das panel/UI
         panel.add(startButton);
@@ -154,23 +165,34 @@ public class gui_test implements ActionListener {
         panel.add(wallButton);
         panel.add(deleteButton);
         panel.add(runButton);
+        panel.add(resetButton);
 
         //Felder werden erstellt, zum panel hinzugefügt und im Schachbrettmuster angelegt
         int zaehler = 0;
-        for(int i = 1;i<30;i++) {
-            for(int j = 1 ; j<20;j++) {
+        for(int i = 0;i<30;i++) {
+            for(int j = 0 ; j<20;j++) {
                 if((zaehler+j)%2==0){
                     feld[i][j] = new Felder();
-                    panel = feld[i][j].addFeld(panel,30 * i,30 * j+60,"grau");
+                    panel = feld[i][j].addFeld(panel,30 * i,30 * j+60,"grau",i,j);
                 }else {
                     feld[i][j] = new Felder();
-                    panel = feld[i][j].addFeld(panel,30 * i,30 * j+60,"weiß");
+                    panel = feld[i][j].addFeld(panel,30 * i,30 * j+60,"weiß",i,j);
                 }
             }
             zaehler++;
         }
 
         return panel;
+    }
+
+    public void resetAllFelder(){
+        for(int i = 0;i<30;i++) {
+            for(int j = 0 ; j<20;j++) {
+
+                    feld[i][j].changeToOiginal();
+
+            }
+        }
     }
 
     public void updateGlobalVar(){
@@ -200,37 +222,161 @@ public class gui_test implements ActionListener {
         return true;
     }
 
-    public void breitenSuche(){
-        arrayFeld = new int[29][19];
-        copyArrayFeld = new int[29][19];
+    public void breitenSuche() {
 
-        //Kopiert die Informationen aus den Feldern und setzt sie in das int Array
-        // 0 wenn das Feld eine Wand ist, ansonsten 1.
-        for(int i = 0;i<20;i++){
-            for(int j = 0;j<30;j++){
-                if(feld[j][i].isWall()){
-                    arrayFeld[j][i] = 0;
-                }else{
-                    arrayFeld[j][i] = 1;
+        if(checkRequirements()) {
+            arrayFeld = new int[30][20];
+            markUsed = new int[30][20];
+            saveLast = new int[30][20][2];
+            boolean terminate = false;
+            Queue xPos = new Queue(6000);
+            Queue yPos = new Queue(6000);
+
+
+            //Kopiert die Informationen aus den Feldern und setzt sie in das int Array
+            // 0 wenn das Feld eine Wand ist, ansonsten 1.
+            for (int i = 0; i < 30; i++) {
+                for (int j = 0; j < 20; j++) {
+                    markUsed[i][j] =0;
+                    if (feld[i][j].isWall()) {
+                        arrayFeld[i][j] = 0;
+                    } else {
+                        arrayFeld[i][j] = 1;
+                    }
                 }
             }
+            //TODO: Breitensuche implementieren
+
+            //System.out.println(startPointXPos+"--"+startPointYPos);
+            markUsed[startPointXPos][startPointYPos] = 1;
+
+            if(startPointXPos -1 >=0){
+                //System.out.println(startPointXPos+"---------"+startPointYPos);
+                //System.out.println(startPointXPos-1+"---------"+startPointYPos);
+                xPos.enqueue(startPointXPos-1);
+                yPos.enqueue(startPointYPos);
+                System.out.println(startPointXPos+"---"+startPointYPos);
+                markUsed[startPointXPos-1][startPointYPos] =1;
+                saveLast[startPointXPos-1][startPointYPos][0] =  startPointXPos;
+                saveLast[startPointXPos-1][startPointYPos][1] =  startPointYPos;
+                feld[startPointXPos-1][startPointYPos].changeToUsed();
+            }
+            if(startPointYPos-1>=0){
+                xPos.enqueue(startPointXPos);
+                yPos.enqueue(startPointYPos-1);
+                markUsed[startPointXPos][startPointYPos-1] =1;
+                saveLast[startPointXPos][startPointYPos-1][0] =  startPointXPos;
+                saveLast[startPointXPos][startPointYPos-1][1] =  startPointYPos;
+                feld[startPointXPos][startPointYPos-1].changeToUsed();
+            }
+            if(startPointXPos+1<29){
+                xPos.enqueue(startPointXPos+1);
+                yPos.enqueue(startPointYPos);
+                markUsed[startPointXPos+1][startPointYPos] =1;
+                saveLast[startPointXPos+1][startPointYPos][0] =  startPointXPos;
+                saveLast[startPointXPos+1][startPointYPos][1] =  startPointYPos;
+                feld[startPointXPos+1][startPointYPos].changeToUsed();
+            }
+            if(startPointYPos+1<19){
+                xPos.enqueue(startPointXPos);
+                yPos.enqueue(startPointYPos+1);
+                markUsed[startPointXPos][startPointYPos+1] =1;
+                saveLast[startPointXPos][startPointYPos+1][0] =  startPointXPos;
+                saveLast[startPointXPos][startPointYPos+1][1] =  startPointYPos;
+                feld[startPointXPos][startPointYPos+1].changeToUsed();
+            }
+
+            int xTemp =0;
+            int yTemp = 0;
+
+            while (!terminate) {
+
+                waitt();
+
+
+                xTemp = xPos.dequeue();
+                yTemp = yPos.dequeue();
+
+            //System.out.println(xTemp+"---------"+yTemp);
+            //System.out.println(xTemp-1+"---------"+yTemp);
+
+                if(xTemp == endPointXPos && yTemp == endPointYPos){
+                    terminate = true;
+                    //TODO: Weg markieren
+                }
+
+                if(xTemp -1 >=0 && markUsed[xTemp-1][yTemp]==0){
+                    waitt();
+                    xPos.enqueue(xTemp-1);
+                    yPos.enqueue(yTemp);
+                    markUsed[xTemp-1][yTemp] =1;
+                    saveLast[xTemp-1][yTemp][0] =  xTemp;
+                    saveLast[xTemp-1][yTemp][1] =  yTemp;
+                    feld[xTemp-1][yTemp].changeToUsed();
+                    System.out.println("used");
+                }
+                if(xTemp +1 <29 && markUsed[xTemp+1][yTemp]==0){
+                    waitt();
+                    xPos.enqueue(xTemp+1);
+                    yPos.enqueue(yTemp);
+                    markUsed[xTemp+1][yTemp] =1;
+                    saveLast[xTemp+1][yTemp][0] =  xTemp;
+                    saveLast[xTemp+1][yTemp][1] =  yTemp;
+                    feld[xTemp+1][yTemp].changeToUsed();
+                    System.out.println("used");
+                }
+                if(yTemp -1 >=0 && markUsed[xTemp][yTemp-1]==0){
+                    waitt();
+                    xPos.enqueue(xTemp);
+                    yPos.enqueue(yTemp-1);
+                    markUsed[xTemp][yTemp-1] =1;
+                    saveLast[xTemp][yTemp-1][0] =  xTemp;
+                    saveLast[xTemp][yTemp-1][1] =  yTemp;
+                    feld[xTemp][yTemp-1].changeToUsed();
+                }
+                if(yTemp +1 <19 && markUsed[xTemp][yTemp+1]==0){
+                    waitt();
+                    xPos.enqueue(xTemp);
+                    yPos.enqueue(yTemp+1);
+                    markUsed[xTemp][yTemp+1] =1;
+                    saveLast[xTemp][yTemp+1][0] =  xTemp;
+                    saveLast[xTemp][yTemp+1][1] =  yTemp;
+                    feld[xTemp][yTemp+1].changeToUsed();
+                }
+
+                JPanel newPanel = panel;
+                frame.remove(panel);
+                frame.add(newPanel);
+                frame.revalidate();
+                frame.repaint();
+
+
+            }
+
+
+
+        }else{
+            System.out.println("Fehler bei den Voraussetzungen");
         }
-        //TODO: Breitensuche implementieren
-
-
     }
 
-
+public void waitt(){
+    try {
+        Thread.sleep(  300);
+    } catch (InterruptedException ie) {
+        Thread.currentThread().interrupt();
+    }
+}
 
     public void press()   {
         //UI wird erstellt
-        JPanel panel = new JPanel();
+        panel = new JPanel();
 
         //Felder und Buttons werden erstellt und auf das panel gesetzt
         panel = addBoxes(panel);
 
         //Fenster wird erstellt und gezeigt
-        JFrame frame = new JFrame("Search Algorithm Visualization - TuhinUni");
+        frame = new JFrame("Search Algorithm Visualization - TuhinUni");
         frame.getContentPane();
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -238,15 +384,11 @@ public class gui_test implements ActionListener {
         frame.setSize(1200, 800);
         frame.setVisible(true);
         //TODO: bei der visualisierung die wartezeit einbauen
-        //for(int i = 1;i<7;i++){
-          //  try {
-            //    Thread.sleep(  100);
-            //} catch (InterruptedException ie) {
-              //  Thread.currentThread().interrupt();
-            //}
-            //feld[i][i].changeToWall();
+        for(int i = 1;i<7;i++){
+            waitt();
+            feld[i][i].changeToWall();
 
-        //}
+        }
     }
 
     public void actionPerformed(ActionEvent event){ //if button is pressed then this changes button text
