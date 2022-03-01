@@ -289,7 +289,7 @@ public class gui_test implements ActionListener {
             int xTemp =0;
             int yTemp = 0;
 
-            while (!terminate) {
+            for (int i = 0;i<10;i++) {
 
                 waitt();
 
