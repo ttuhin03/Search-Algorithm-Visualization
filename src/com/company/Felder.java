@@ -20,6 +20,7 @@ public class Felder {
     private final ImageIcon start = new ImageIcon("C:\\Users\\Tuhin Thodeme\\Documents\\GitHub\\Search-Algorithm-Visualization\\src\\com\\company\\bilder\\green.jpg");
     private final ImageIcon end = new ImageIcon("C:\\Users\\Tuhin Thodeme\\Documents\\GitHub\\Search-Algorithm-Visualization\\src\\com\\company\\bilder\\red.jpg");
     private final ImageIcon used = new ImageIcon("C:\\Users\\Tuhin Thodeme\\Documents\\GitHub\\Search-Algorithm-Visualization\\src\\com\\company\\bilder\\yellow.jpg");
+    private final ImageIcon weg = new ImageIcon("C:\\Users\\Tuhin Thodeme\\Documents\\GitHub\\Search-Algorithm-Visualization\\src\\com\\company\\bilder\\magenta.jpg");
     private ImageIcon original = new ImageIcon();
 
 
@@ -78,7 +79,6 @@ public class Felder {
     //wird in der UI die Farbe verändert zur Visualisierung
     public void changeToUsed(){
         label.setIcon(used);
-        System.out.println("useeeeeed");
     }
 
     //Gibt zurück, ob das jeweilige Feld ein Startpunkt ist
@@ -98,8 +98,7 @@ public class Felder {
 
     //Setzt am Ende des Algorithmus den gefundenen schnellesten Weg in die Farbe zur Visualisierung
     public void changeToPath(){
-        //TODO:get color for path
-        //label.setIcon();
+        label.setIcon(weg);
     }
 
     public void changeToOiginal(){
@@ -157,6 +156,5 @@ public class Felder {
         //Verändert Farbe zu Wand
         label.setIcon(blau);
         isWall = true;
-        System.out.println("Set Wall");
     }
 }

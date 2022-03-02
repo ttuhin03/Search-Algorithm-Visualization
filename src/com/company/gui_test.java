@@ -17,6 +17,8 @@ import java.awt.event.*;
 import java.util.concurrent.TimeUnit;
 
 public class gui_test implements ActionListener {
+    private static boolean ttest;
+
     public JFrame frame;
     public JPanel panel;
     private static int[][] arrayFeld, markUsed;
@@ -48,6 +50,16 @@ public class gui_test implements ActionListener {
 
             //UI wird erstellt
             gui.press();
+            ttest = false;
+            while(true){
+                gui.waitt2();
+                //System.out.println("schleife");
+                if(ttest) {
+                  //  System.out.println("breitensuche");
+                    gui.breitenSuche();
+                }
+            }
+
         }else{
             System.out.println("Fehler");
         }
@@ -137,8 +149,8 @@ public class gui_test implements ActionListener {
                     runButton.setEnabled(false);
 
                     //TODO:Algorithmus starten + auswahl des algorithmus überprüfen
-                    breitenSuche();
-
+                    //breitenSuche();
+                    ttest = true;
                     startButton.setEnabled(true);
                     endButton.setEnabled(true);
                     wallButton.setEnabled(true);
@@ -229,8 +241,8 @@ public class gui_test implements ActionListener {
             markUsed = new int[30][20];
             saveLast = new int[30][20][2];
             boolean terminate = false;
-            Queue xPos = new Queue(6000);
-            Queue yPos = new Queue(6000);
+            Queue xPos = new Queue(100);
+            Queue yPos = new Queue(100);
 
 
             //Kopiert die Informationen aus den Feldern und setzt sie in das int Array
@@ -239,9 +251,7 @@ public class gui_test implements ActionListener {
                 for (int j = 0; j < 20; j++) {
                     markUsed[i][j] =0;
                     if (feld[i][j].isWall()) {
-                        arrayFeld[i][j] = 0;
-                    } else {
-                        arrayFeld[i][j] = 1;
+                        markUsed[i][j] = 1;
                     }
                 }
             }
@@ -289,7 +299,7 @@ public class gui_test implements ActionListener {
             int xTemp =0;
             int yTemp = 0;
 
-            for (int i = 0;i<10;i++) {
+            while(!terminate) {
 
                 waitt();
 
@@ -301,32 +311,42 @@ public class gui_test implements ActionListener {
             //System.out.println(xTemp-1+"---------"+yTemp);
 
                 if(xTemp == endPointXPos && yTemp == endPointYPos){
+                    System.out.println(startPointXPos+"llllll"+startPointYPos);
                     terminate = true;
+                    System.out.println("TERMINIERT");
                     //TODO: Weg markieren
-                }
+                    System.out.println(xTemp+"---"+yTemp) ;
+                    while(xTemp!=startPointXPos || yTemp != startPointYPos){
+                        feld[xTemp][yTemp].changeToPath();
+                        xTemp = saveLast[xTemp][yTemp][0];
+                        yTemp = saveLast[xTemp][yTemp][1];
+                        System.out.println(xTemp+"---"+yTemp) ;
+                    }
+
+                }else{
 
                 if(xTemp -1 >=0 && markUsed[xTemp-1][yTemp]==0){
-                    waitt();
                     xPos.enqueue(xTemp-1);
                     yPos.enqueue(yTemp);
                     markUsed[xTemp-1][yTemp] =1;
                     saveLast[xTemp-1][yTemp][0] =  xTemp;
                     saveLast[xTemp-1][yTemp][1] =  yTemp;
                     feld[xTemp-1][yTemp].changeToUsed();
-                    System.out.println("used");
+
                 }
+                waitt();
                 if(xTemp +1 <29 && markUsed[xTemp+1][yTemp]==0){
-                    waitt();
+
                     xPos.enqueue(xTemp+1);
                     yPos.enqueue(yTemp);
                     markUsed[xTemp+1][yTemp] =1;
                     saveLast[xTemp+1][yTemp][0] =  xTemp;
                     saveLast[xTemp+1][yTemp][1] =  yTemp;
                     feld[xTemp+1][yTemp].changeToUsed();
-                    System.out.println("used");
+
                 }
+                waitt();
                 if(yTemp -1 >=0 && markUsed[xTemp][yTemp-1]==0){
-                    waitt();
                     xPos.enqueue(xTemp);
                     yPos.enqueue(yTemp-1);
                     markUsed[xTemp][yTemp-1] =1;
@@ -334,8 +354,8 @@ public class gui_test implements ActionListener {
                     saveLast[xTemp][yTemp-1][1] =  yTemp;
                     feld[xTemp][yTemp-1].changeToUsed();
                 }
+                waitt();
                 if(yTemp +1 <19 && markUsed[xTemp][yTemp+1]==0){
-                    waitt();
                     xPos.enqueue(xTemp);
                     yPos.enqueue(yTemp+1);
                     markUsed[xTemp][yTemp+1] =1;
@@ -351,9 +371,9 @@ public class gui_test implements ActionListener {
                 frame.repaint();
 
 
+                }
             }
-
-
+            ttest = false;
 
         }else{
             System.out.println("Fehler bei den Voraussetzungen");
@@ -362,11 +382,18 @@ public class gui_test implements ActionListener {
 
 public void waitt(){
     try {
-        Thread.sleep(  300);
+        Thread.sleep(  70);
     } catch (InterruptedException ie) {
         Thread.currentThread().interrupt();
     }
 }
+    public void waitt2(){
+        try {
+            Thread.sleep(  200);
+        } catch (InterruptedException ie) {
+            Thread.currentThread().interrupt();
+        }
+    }
 
     public void press()   {
         //UI wird erstellt
@@ -384,11 +411,7 @@ public void waitt(){
         frame.setSize(1200, 800);
         frame.setVisible(true);
         //TODO: bei der visualisierung die wartezeit einbauen
-        for(int i = 1;i<7;i++){
-            waitt();
-            feld[i][i].changeToWall();
 
-        }
     }
 
     public void actionPerformed(ActionEvent event){ //if button is pressed then this changes button text
