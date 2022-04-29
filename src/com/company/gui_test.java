@@ -382,7 +382,7 @@ public class gui_test implements ActionListener {
 
 public void waitt(){
     try {
-        Thread.sleep(  70);
+        Thread.sleep(  35);
     } catch (InterruptedException ie) {
         Thread.currentThread().interrupt();
     }
