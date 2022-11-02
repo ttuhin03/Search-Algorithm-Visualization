@@ -22,9 +22,10 @@ public class Felder {
     private final ImageIcon used = new ImageIcon("C:\\Users\\Tuhin Thodeme\\Documents\\GitHub\\Search-Algorithm-Visualization\\src\\com\\company\\bilder\\yellow.jpg");
     private final ImageIcon weg = new ImageIcon("C:\\Users\\Tuhin Thodeme\\Documents\\GitHub\\Search-Algorithm-Visualization\\src\\com\\company\\bilder\\magenta.jpg");
     private ImageIcon original = new ImageIcon();
+    private gui_test gui;
 
-
-    public Felder(){
+    public Felder(gui_test program){
+        gui = program;
         //default Werte
         isWall = false;
         startPoint = false;
@@ -55,13 +56,13 @@ public class Felder {
         //Die Aktion für den Fall der Auswahl wird gesetzt.
         label.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent me) {
-                if(gui_test.setWallButton){
+                if(gui.setWallButton){
                     changeToWall();
-                }else if (gui_test.setStartpointButton){
+                }else if (gui.setStartpointButton){
                     setStartPoint();
-                }else if(gui_test.setEndpointButton){
+                }else if(gui.setEndpointButton){
                     setEndPoint();
-                }else if(gui_test.setDeleteButton){
+                }else if(gui.setDeleteButton){
                     changeToOiginal();
                 }else{
                     System.out.println("Keine Auswahl getroffen");
@@ -112,16 +113,16 @@ public class Felder {
 
     public void setEndPoint(){
         //Setzt Endpunkt, falls noch kein anderer vorhanden ist
-        if(!gui_test.globalIsEndpointSet) {
+        if(!gui.globalIsEndpointSet) {
             label.setIcon(end);
             endPoint = true;
             //Updatet die Globale variablen
-            gui_test.endPointXPos = x;
-            gui_test.endPointYPos = y;
-            gui_test.globalIsEndpointSet = true;
+            gui.endPointXPos = x;
+            gui.endPointYPos = y;
+            gui.globalIsEndpointSet = true;
             if(startPoint) {
                 startPoint = false;
-                gui_test.globalIsStartpointSet = false;
+                gui.globalIsStartpointSet = false;
             }
             if (isWall){
                 isWall = false;
@@ -133,16 +134,16 @@ public class Felder {
 
     public void setStartPoint(){
         //Setzt Startpunkt, falls noch kein anderer vorhanden ist
-        if(!gui_test.globalIsStartpointSet) {
+        if(!gui.globalIsStartpointSet) {
                 label.setIcon(start);
                 startPoint = true;
                 //Updatet die Globale variablen
-                gui_test.startPointXPos = x;
-                gui_test.startPointYPos = y;
-                gui_test.globalIsStartpointSet = true;
+                gui.startPointXPos = x;
+                gui.startPointYPos = y;
+                gui.globalIsStartpointSet = true;
             if(endPoint) {
                 endPoint = false;
-                gui_test.globalIsEndpointSet = false;
+                gui.globalIsEndpointSet = false;
             }
             if (isWall){
                 isWall = false;
