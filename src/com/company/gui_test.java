@@ -6,7 +6,6 @@ import java.util.concurrent.TimeUnit;
 
 public class gui_test implements ActionListener {
     public boolean ttest;
-
     public JFrame frame;
     public JPanel panel;
     private static int[][] arrayFeld, markUsed;
@@ -90,25 +89,8 @@ public class gui_test implements ActionListener {
             } } );
 
         //Button um ALLE Felder wieder zurückzusetzen
-        resetButton = new JButton("Reset");
-        resetButton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e1){
-                setStartpointButton = false;
-                setEndpointButton = false;
-                setWallButton = false;
-                setDeleteButton = false;
+        resetButton = new ResetButton(this);
 
-                //Setzt alle Felder auf ihren Startzustand (Leeres Feld) zurück
-                resetAllFelder();
-
-                endPointXPos = -42;
-                endPointYPos = -42;
-                startPointXPos = -42;
-                startPointYPos = -42;
-                globalIsEndpointSet = false;
-                globalIsStartpointSet = false;
-
-            } } );
 
         //Button für den Start des ausgewählten Algorithmus
         runButton = new JButton("RUN");
