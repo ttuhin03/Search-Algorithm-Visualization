@@ -9,7 +9,7 @@ public class RunButton extends JButton{
     private gui_test gui;
 
     public RunButton(gui_test progam){
-
+        super("Run");
         gui = progam;
 
         this.addActionListener(new ActionListener(){
