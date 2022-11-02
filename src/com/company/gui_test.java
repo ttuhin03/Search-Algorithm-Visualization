@@ -10,6 +10,7 @@ import java.io.Writer;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.*;
 
 import javax.swing.*;
@@ -17,7 +18,7 @@ import java.awt.event.*;
 import java.util.concurrent.TimeUnit;
 
 public class gui_test implements ActionListener {
-    private static boolean ttest;
+    public boolean ttest;
 
     public JFrame frame;
     public JPanel panel;
@@ -25,16 +26,11 @@ public class gui_test implements ActionListener {
     private static int [][][]saveLast;
     JButton startButton,endButton,wallButton,deleteButton, runButton,resetButton;
     private Felder[][] feld = new Felder[30][20];
-    public static boolean globalIsEndpointSet, globalIsStartpointSet;
-    public static int endPointXPos, endPointYPos, startPointXPos, startPointYPos;
-    public static boolean setWallButton, setStartpointButton, setEndpointButton, setDeleteButton;
+    public  boolean globalIsEndpointSet, globalIsStartpointSet;
+    public  int endPointXPos, endPointYPos, startPointXPos, startPointYPos;
+    public  boolean setWallButton, setStartpointButton, setEndpointButton, setDeleteButton;
 
-    public static void main (String[] args) {
-        String test = getTextFromGithub("https://github.com/HaeMGe/Search-Algorithm-Visualization/blob/main/src/com/company/bilder/papierkorb/rot.txt");
-
-        if(test.contains("#CC33003929")) {
-
-            gui_test gui = new gui_test();
+    public gui_test () {
 
             //alle globale Variablen werden auf ihren Strtwert gesetzt
             globalIsEndpointSet = false;
@@ -49,20 +45,16 @@ public class gui_test implements ActionListener {
             startPointYPos = -42;
 
             //UI wird erstellt
-            gui.press();
+            press();
             ttest = false;
             while(true){
-                gui.waitt2();
+                waitt2();
                 //System.out.println("schleife");
                 if(ttest) {
                   //  System.out.println("breitensuche");
-                    gui.breitenSuche();
+                    breitenSuche();
                 }
             }
-
-        }else{
-            System.out.println("Fehler");
-        }
     }
 
     public JPanel addBoxes(JPanel panel){
@@ -119,6 +111,7 @@ public class gui_test implements ActionListener {
                 setWallButton = false;
                 setDeleteButton = false;
 
+                //Setzt alle Felder auf ihren Startzustand (Leeres Feld) zurück
                 resetAllFelder();
 
                 endPointXPos = -42;
@@ -184,10 +177,10 @@ public class gui_test implements ActionListener {
         for(int i = 0;i<30;i++) {
             for(int j = 0 ; j<20;j++) {
                 if((zaehler+j)%2==0){
-                    feld[i][j] = new Felder();
+                    feld[i][j] = new Felder(this);
                     panel = feld[i][j].addFeld(panel,30 * i,30 * j+60,"grau",i,j);
                 }else {
-                    feld[i][j] = new Felder();
+                    feld[i][j] = new Felder(this);
                     panel = feld[i][j].addFeld(panel,30 * i,30 * j+60,"weiß",i,j);
                 }
             }
@@ -315,6 +308,9 @@ public class gui_test implements ActionListener {
                     terminate = true;
                     System.out.println("TERMINIERT");
                     //TODO: Weg markieren
+
+                    xTemp = saveLast[xTemp][yTemp][0];
+                    yTemp = saveLast[xTemp][yTemp][1];
                     System.out.println(xTemp+"---"+yTemp) ;
                     while(xTemp!=startPointXPos || yTemp != startPointYPos){
                         feld[xTemp][yTemp].changeToPath();
@@ -322,6 +318,8 @@ public class gui_test implements ActionListener {
                         yTemp = saveLast[xTemp][yTemp][1];
                         System.out.println(xTemp+"---"+yTemp) ;
                     }
+
+                    feld[endPointXPos][endPointYPos].setEndPoint();
 
                 }else{
 
@@ -396,6 +394,7 @@ public void waitt(){
     }
 
     public void press()   {
+
         //UI wird erstellt
         panel = new JPanel();
 
@@ -416,77 +415,5 @@ public void waitt(){
 
     public void actionPerformed(ActionEvent event){ //if button is pressed then this changes button text
         //button.setText("I was pressed!");
-    }
-
-    public static String getTextFromGithub(String link) {
-
-        //Wichtige Magie
-
-        URL Url = null;
-        try {
-            Url = new URL(link);
-        } catch (MalformedURLException e1) {
-            e1.printStackTrace();
-        }
-        HttpURLConnection Http = null;
-        try {
-            Http = (HttpURLConnection) Url.openConnection();
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-        Map<String, List<String>> Header = Http.getHeaderFields();
-
-        for (String header : Header.get(null)) {
-            if (header.contains(" 302 ") || header.contains(" 301 ")) {
-                link = Header.get("Location").get(0);
-                try {
-                    Url = new URL(link);
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    Http = (HttpURLConnection) Url.openConnection();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                Header = Http.getHeaderFields();
-            }
-        }
-        InputStream Stream = null;
-        try {
-            Stream = Http.getInputStream();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        String Response = null;
-        try {
-            Response = GetStringFromStream(Stream);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return Response;
-    }
-
-    private static String GetStringFromStream(InputStream Stream) throws IOException {
-
-        //Wichtige Magie
-
-        if (Stream != null) {
-            Writer Writer = new StringWriter();
-
-            char[] Buffer = new char[2048];
-            try {
-                Reader Reader = new BufferedReader(new InputStreamReader(Stream, "UTF-8"));
-                int counter;
-                while ((counter = Reader.read(Buffer)) != -1) {
-                    Writer.write(Buffer, 0, counter);
-                }
-            } finally {
-                Stream.close();
-            }
-            return Writer.toString();
-        } else {
-            return "No Contents";
-        }
     }
 }
