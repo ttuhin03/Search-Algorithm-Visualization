@@ -13,7 +13,6 @@ public class ResetButton extends JButton {
 
         gui = progam;
 
-
         addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e1){
                 gui.setStartpointButton = false;

@@ -68,14 +68,8 @@ public class gui_test implements ActionListener {
             } } );
 
         //Button um Wände zu setzen
-        wallButton = new JButton("Wand");
-        wallButton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e3){
-                setStartpointButton = false;
-                setEndpointButton = false;
-                setWallButton = true;
-                setDeleteButton = false;
-            } } );
+        wallButton = new WallButton(this);
+
 
         //Button um die Auswahl vom Feld wieder rückgängig zu machen
         deleteButton = new DeleteButton(this);
