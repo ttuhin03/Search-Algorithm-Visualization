@@ -58,26 +58,16 @@ public class gui_test implements ActionListener {
             } } );
 
         //Button um den Endpunkt zu setzen
-        endButton = new JButton("Endpunkt");
-        endButton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e2){
-                setStartpointButton = false;
-                setEndpointButton = true;
-                setWallButton = false;
-                setDeleteButton = false;
-            } } );
+        endButton = new EndPointButton(this);
 
         //Button um Wände zu setzen
         wallButton = new WallButton(this);
 
-
         //Button um die Auswahl vom Feld wieder rückgängig zu machen
         deleteButton = new DeleteButton(this);
 
-
         //Button um ALLE Felder wieder zurückzusetzen
         resetButton = new ResetButton(this);
-
 
         //Button für den Start des ausgewählten Algorithmus
         runButton = new RunButton(this);
