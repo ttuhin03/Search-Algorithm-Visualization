@@ -78,15 +78,8 @@ public class gui_test implements ActionListener {
             } } );
 
         //Button um die Auswahl vom Feld wieder rückgängig zu machen
-        deleteButton = new JButton("Löschen");
-        deleteButton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e4){
-                setStartpointButton = false;
-                setEndpointButton = false;
-                setWallButton = false;
-                setDeleteButton = true;
-                //TODO: aufruf globaVaroable updater damit evt.  fehler vermieden werden
-            } } );
+        deleteButton = new DeleteButton(this);
+
 
         //Button um ALLE Felder wieder zurückzusetzen
         resetButton = new ResetButton(this);
