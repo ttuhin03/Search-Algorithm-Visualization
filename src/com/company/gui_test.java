@@ -93,37 +93,8 @@ public class gui_test implements ActionListener {
 
 
         //Button für den Start des ausgewählten Algorithmus
-        runButton = new JButton("RUN");
-        runButton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e5){
+        runButton = new RunButton(this);
 
-                if(checkRequirements()) {
-
-                    setStartpointButton = false;
-                    setEndpointButton = false;
-                    setWallButton = false;
-                    setDeleteButton = false;
-
-                    startButton.setEnabled(false);
-                    endButton.setEnabled(false);
-                    wallButton.setEnabled(false);
-                    deleteButton.setEnabled(false);
-                    runButton.setEnabled(false);
-
-                    //TODO:Algorithmus starten + auswahl des algorithmus überprüfen
-                    //breitenSuche();
-                    ttest = true;
-                    startButton.setEnabled(true);
-                    endButton.setEnabled(true);
-                    wallButton.setEnabled(true);
-                    deleteButton.setEnabled(true);
-                    runButton.setEnabled(true);
-
-                }else{
-                    System.out.println("Voraussetzungen nicht erfüllt");
-                }
-
-            } } );
 
         //Platzierung der Buttons
         startButton.setBounds(20,20,130,40);
