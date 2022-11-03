@@ -48,14 +48,7 @@ public class gui_test implements ActionListener {
         panel.setLayout(null);
 
         //Button um den Startpunkt zu setzen
-        startButton = new JButton("Startpunkt");
-        startButton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e1){
-               setStartpointButton = true;
-                setEndpointButton = false;
-                setWallButton = false;
-                setDeleteButton = false;
-            } } );
+        startButton = new StartPointButton(this);
 
         //Button um den Endpunkt zu setzen
         endButton = new EndPointButton(this);
