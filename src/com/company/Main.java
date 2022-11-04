@@ -11,14 +11,24 @@ public class Main {
 
     public static void main(String[] args) {
         String test = getTextFromGithub("https://github.com/HaeMGe/Search-Algorithm-Visualization/blob/main/src/com/company/bilder/papierkorb/rot.txt");
+        boolean development = true;
 
-        if(test.contains("#CC33003929")) {
-
+        if(development){
             gui_test gui = new gui_test();
+        }else {
 
-        }else{
-            System.err.println("Fehler bei der Programmausführung");
+            if (test.contains("#CC33003929")) {
+
+                gui_test gui = new gui_test();
+
+            } else {
+                System.err.println("Fehler bei der Programmausführung");
+            }
+
+
         }
+
+
     }
 
 
