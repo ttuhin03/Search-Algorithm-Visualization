@@ -63,6 +63,16 @@ public class Felder {
                 }else if(gui.setEndpointButton){
                     setEndPoint();
                 }else if(gui.setDeleteButton){
+                    if(endPoint){
+                        gui.globalIsEndpointSet = false;
+                        gui.endPointYPos = -42;
+                        gui.endPointXPos = -42;
+                    }
+                    if(startPoint){
+                        gui.globalIsStartpointSet = false;
+                        gui.startPointXPos = -42;
+                        gui.startPointYPos = -42;
+                    }
                     changeToOiginal();
                 }else{
                     System.out.println("Keine Auswahl getroffen");
