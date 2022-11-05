@@ -113,6 +113,19 @@ public class Felder {
     }
 
     public void changeToOiginal(){
+
+        if (endPoint) {
+            gui.globalIsEndpointSet = false;
+            gui.endPointYPos = -42;
+            gui.endPointXPos = -42;
+        }
+        if (startPoint) {
+            gui.globalIsStartpointSet = false;
+            gui.startPointXPos = -42;
+            gui.startPointYPos = -42;
+        }
+
+
         //Verändert die Farbe vom Feld zu seinem Original, zB bei einem Reset oder Löschung des Feldes
         label.setIcon(original);
         isWall = false;

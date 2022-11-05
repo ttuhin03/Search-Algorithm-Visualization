@@ -18,7 +18,6 @@ public class DeleteButton extends JButton {
                 gui.setEndpointButton = false;
                 gui.setWallButton = false;
                 gui.setDeleteButton = true;
-                //TODO: aufruf globaVaroable updater damit evt.  fehler vermieden werden
             } } );
     }
 

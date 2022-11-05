@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 public class EndPointButton extends JButton {
 
     private gui_test gui;
-
     public EndPointButton(gui_test program){
         super("Endpoint");
         gui = program;

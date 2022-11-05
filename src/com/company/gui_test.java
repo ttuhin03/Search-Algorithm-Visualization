@@ -163,6 +163,7 @@ public class gui_test implements ActionListener {
             //System.out.println(startPointXPos+"--"+startPointYPos);
             markUsed[startPointXPos][startPointYPos] = 1;
 
+            //TODO: wenn wand direkt am startpunkt, wird die wand ignoriert
             if(startPointXPos -1 >=0){
                 //System.out.println(startPointXPos+"---------"+startPointYPos);
                 //System.out.println(startPointXPos-1+"---------"+startPointYPos);
@@ -217,19 +218,26 @@ public class gui_test implements ActionListener {
                     System.out.println(startPointXPos+"llllll"+startPointYPos);
                     terminate = true;
                     System.out.println("TERMINIERT");
-                    //TODO: Weg markieren
+
+                    xTemp= endPointXPos;
+                    yTemp = endPointYPos;
+                    feld[xTemp][yTemp].changeToOiginal();
+                    feld[xTemp][yTemp].setEndPoint();
+
+                    //TODO: weg malen richtig implementieren(dauerschleife ständig)
+
+                    //TODO: schräg gehen löschen
 
                     xTemp = saveLast[xTemp][yTemp][0];
                     yTemp = saveLast[xTemp][yTemp][1];
-                    System.out.println(xTemp+"---"+yTemp) ;
+
                     while(xTemp!=startPointXPos || yTemp != startPointYPos){
                         feld[xTemp][yTemp].changeToPath();
                         xTemp = saveLast[xTemp][yTemp][0];
                         yTemp = saveLast[xTemp][yTemp][1];
                         System.out.println(xTemp+"---"+yTemp) ;
+                        waitt2();
                     }
-
-                    feld[endPointXPos][endPointYPos].setEndPoint();
 
                 }else{
 
@@ -319,7 +327,6 @@ public void waitt(){
         frame.add(panel);
         frame.setSize(1200, 800);
         frame.setVisible(true);
-        //TODO: bei der visualisierung die wartezeit einbauen
 
     }
 
