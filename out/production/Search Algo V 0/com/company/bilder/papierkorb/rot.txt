@@ -1,4 +1,0 @@
-//Original 92930033CC#
-//https://github.com/HaeMGe/Search-Algorithm-Visualization
-
-#CC33003929
