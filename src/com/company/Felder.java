@@ -13,14 +13,13 @@ public class Felder {
     private boolean startPoint;
     private boolean endPoint;
     private JLabel label = new JLabel();
-    //TODO: Change Paths from Absoolute Path to relative paths
-    private final ImageIcon blau = new ImageIcon("C:\\Users\\Tuhin Thodeme\\Documents\\GitHub\\Search-Algorithm-Visualization\\src\\com\\company\\bilder\\blau.jpg");
-    private final ImageIcon weiss = new ImageIcon("C:\\Users\\Tuhin Thodeme\\Documents\\GitHub\\Search-Algorithm-Visualization\\src\\com\\company\\bilder\\weiß.jpg");
-    private final ImageIcon grau = new ImageIcon("C:\\Users\\Tuhin Thodeme\\Documents\\GitHub\\Search-Algorithm-Visualization\\src\\com\\company\\bilder\\grau.jpg");
-    private final ImageIcon start = new ImageIcon("C:\\Users\\Tuhin Thodeme\\Documents\\GitHub\\Search-Algorithm-Visualization\\src\\com\\company\\bilder\\green.jpg");
-    private final ImageIcon end = new ImageIcon("C:\\Users\\Tuhin Thodeme\\Documents\\GitHub\\Search-Algorithm-Visualization\\src\\com\\company\\bilder\\red.jpg");
-    private final ImageIcon used = new ImageIcon("C:\\Users\\Tuhin Thodeme\\Documents\\GitHub\\Search-Algorithm-Visualization\\src\\com\\company\\bilder\\yellow.jpg");
-    private final ImageIcon weg = new ImageIcon("C:\\Users\\Tuhin Thodeme\\Documents\\GitHub\\Search-Algorithm-Visualization\\src\\com\\company\\bilder\\magenta.jpg");
+    private final ImageIcon blau = new ImageIcon("src/com/company/bilder/blau.jpg");
+    private final ImageIcon weiss = new ImageIcon("src/com/company/bilder/weiß.jpg");
+    private final ImageIcon grau = new ImageIcon("src/com/company/bilder/grau.jpg");
+    private final ImageIcon start = new ImageIcon("src/com/company/bilder/green.jpg");
+    private final ImageIcon end = new ImageIcon("src/com/company/bilder/red.jpg");
+    private final ImageIcon used = new ImageIcon("src/com/company/bilder/yellow.jpg");
+    private final ImageIcon weg = new ImageIcon("src/com/company/bilder/magenta.jpg");
     private ImageIcon original = new ImageIcon();
     private gui_test gui;
 
